@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的二维码生成器</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        #input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #qrcode {
+            margin: 20px auto;
+            text-align: center;
+        }
+        .instructions {
+            margin-top: 30px;
+            padding: 10px;
+            background-color: #e6f7ff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>简易二维码生成器</h1>
+    
+    <input type="text" id="input" placeholder="输入网址或文字，例如: https://baidu.com" value="https://baidu.com">
+    <button onclick="generateQRCode()">生成二维码</button>
+    
+    <div id="qrcode"></div>
+    
+    <div class="instructions">
+        <h3>使用说明：</h3>
+        <p>1. 在上方输入框中输入网址或文字</p>
+        <p>2. 点击"生成二维码"按钮</p>
+        <p>3. 用微信扫描二维码即可跳转</p>
+        <p>提示：网址要以http://或https://开头</p>
+    </div>
+
+    <script>
+        function generateQRCode() {
+            const text = document.getElementById('input').value.trim();
+            
+            if (!text) {
+                alert('请输入内容');
+                return;
+            }
+            
+            document.getElementById('qrcode').innerHTML = '';
+            
+            QRCode.toCanvas(document.getElementById('qrcode'), text, {
+                width: 200,
+                margin: 2,
+                color: {
+                    dark: '#000000',
+                    light: '#ffffff'
+                }
+            }, function(error) {
+                if (error) {
+                    alert('生成失败，请重试');
+                }
+            });
+        }
+        
+        // 页面加载时自动生成一个示例二维码
+        window.onload = generateQRCode;
+    </script>
+</body>
+</html>
